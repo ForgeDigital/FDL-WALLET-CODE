@@ -1,0 +1,75 @@
+version: '3.9'
+
+networks:
+    webapi:
+
+services:
+
+    #Nginx Service
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        container_name: ${APP_NAME}_nginx
+        ports:
+            - '${APP_PORT}:80'
+        links:
+            - php
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - php
+            - postgres
+        networks:
+            - webapi
+
+    #apache Service
+
+    #PHP Service
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        container_name: ${APP_NAME}_php
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - '4000:4000'
+        networks:
+            - webapi
+
+    #MySQL Database Service
+#    mysql:
+#        image: 'mysql:8.0'
+#        container_name: '${APP_NAME}_mysql'
+#        restart: unless-stopped
+#        tty: true
+#        volumes:
+#            - ./docker/mysql:/var/lib/mysql
+#        ports:
+#            - '${DB_PORT}:${DB_PORT}'
+#        environment:
+#            MYSQL_ROOT_USER: '${DB_USERNAME}'
+#            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+#            MYSQL_DATABASE: '${DB_DATABASE}'
+#            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+#        networks:
+#            - webapi
+
+    #Postgres Database Service
+    postgres:
+        image: postgres:latest
+        container_name: ${APP_NAME}_postgres
+        restart: unless-stopped
+        ports:
+            - '${DB_PORT}:${DB_PORT}'
+        volumes:
+            - ./docker/postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_HOST_AUTH_METHOD: 'trust'
+            PGDATA: /var/lib/postgresql/data/default/
+        networks:
+            - webapi
