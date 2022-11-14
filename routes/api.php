@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Customer\Resource\Customer\CustomerController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'api/v1'], function ()
+{
+    // Forge resource routes
+    Route::group(['prefix' => 'forge'], function ()
+    {
+        // Forge main resources
+
+        // Merchant resources accessed on Forge
+
+        // Customer resources accessed on Forge
+    });
+
+    // Merchant resource routes
+    Route::group(['prefix' => ''], function ()
+    {
+        // Merchant main resources
+
+        // Forge resources accessed on merchant
+
+        // Customer resources accessed on merchant
+    });
+
+    // Customer resource routes
+    Route::group(['prefix' => ''], function ()
+    {
+        // Customer main resources
+        Route::apiResource( 'customers', CustomerController::class ) -> except('index', 'destroy');
+
+        // Forge resources accessed on customer
+
+        // Merchant resources accessed on customer
+    });
 });
