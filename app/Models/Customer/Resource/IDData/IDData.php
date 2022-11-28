@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Customer\Resource\Wallet;
+namespace App\Models\Customer\Resource\IDData;
 
 use App\Models\Customer\Resource\Customer\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Wallet extends Model
+class IDData extends Model
 {
     use HasFactory;
 
-    protected $guarded = [ 'id' ];
+    protected $guarded = [ 'id' ], $table = 'id_data';
 
     /**
      * @return string

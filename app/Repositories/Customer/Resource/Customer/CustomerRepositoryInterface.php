@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Customer\Resource\Customer;
+namespace App\Repositories\Customer\Resource\Customer;
 
 use App\Http\Requests\Customer\Resource\Customer\CustomerRequest;
 use App\Http\Resources\Customer\Resource\Customer\CustomerResource;

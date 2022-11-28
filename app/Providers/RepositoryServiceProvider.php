@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repository\Customer\Resource\Customer\CustomerRepository;
-use App\Repository\Customer\Resource\Customer\CustomerRepositoryInterface;
+use App\Repositories\Customer\Resource\Customer\CustomerRepository;
+use App\Repositories\Customer\Resource\Customer\CustomerRepositoryInterface;
 
 use Illuminate\Support\ServiceProvider;
 

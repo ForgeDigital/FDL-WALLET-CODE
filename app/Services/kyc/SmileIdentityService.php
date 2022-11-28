@@ -27,20 +27,21 @@ class SmileIdentityService
      */
     public function verifyCustomer( array $data ) : mixed
     {
-        $response = Http::withHeaders(['Content-Type' => 'application/json', 'Accept' => 'application/json']) -> post( 'https://testapi.smileidentity.com/v1/id_verification',
+        $response = Http::withHeaders(['Content-Type' => 'application/json', 'Accept' => 'application/json']) -> post( env( 'SMILE_PROD_URL' ),
         [
             'source_sdk' => 'rest_api',
             'source_sdk_version' => '1.0.0',
             'signature' => $this -> signature,
             'timestamp' => $this -> timestamp,
 
-            'partner_params' => [ 'user_id' => generateResource( 15, 'merchants' ), 'job_id' => generateResource( 10, 'merchants' ), 'job_type' => 5 ],
+            'partner_params' => [ 'user_id' => generateAlphaNumericResource( 12 ), 'job_id' => generateAlphaNumericResource( 12 ), 'job_type' => 5 ],
 
             'country' => $data['country'],
             'id_type' => $data['id_type'],
             'id_number' => $data['id_number'],
             'partner_id' => $this -> partner_id,
         ]);
+
         return $response -> json();
     }
 
@@ -62,45 +63,3 @@ class SmileIdentityService
         ];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Call KYC service
-//        $getKYC = new SmileIdentityService;
-//        $data = $getKYC -> verifyCustomer( $this -> theRequest -> input( 'data.attributes' ));
-
-
-// Build the insert body
-//        $customer = new Customer();
-//        $customer -> resource_id = generateResource( 14, 'merchants' );
-//        $customer -> first_name = $data['FullData']['FirstName'];
-//        $customer -> middle_name = $data['FullData']['MiddleName'];
-//        $customer -> last_name = $data['FullData']['LastName'];
-//        $customer -> nationality = $data['FullData']['Nationality'];
-//        $customer -> gender = $data['FullData']['Gender'];
-//        $customer -> dob = $data['FullData']['DateOfBirth'];
-//        $customer -> image = $data['FullData']['Picture'];
-//        $customer -> primary_phone = $data['PhoneNumber'];
-//        $customer -> secondary_phone = $data['PhoneNumber2'];
-//        $customer -> email = $this -> theRequest -> input( 'data.attributes.email' );
-
-//        logger( $customer );
-//        exit();
-
-//        $customer -> save();
-//        $customer -> refresh();
-//        return ( new CustomerResource( $customer ) );

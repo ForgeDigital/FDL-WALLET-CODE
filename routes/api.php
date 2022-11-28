@@ -38,10 +38,11 @@ Route::group(['prefix' => 'api/v1'], function ()
     });
 
     // Customer resource routes
-    Route::group(['prefix' => ''], function ()
+    Route::group(['prefix' => 'customers'], function ()
     {
         // Customer main resources
-        Route::apiResource( 'customers', CustomerController::class ) -> except('index', 'destroy');
+        Route::post('kyc', [ CustomerController::class, 'store' ]);
+
 
         // Forge resources accessed on customer
 

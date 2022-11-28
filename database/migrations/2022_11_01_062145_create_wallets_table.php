@@ -11,11 +11,17 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() : void
     {
-        Schema::create('wallets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('wallets', function ( Blueprint $table )
+        {
+            $table -> id();
+            $table -> string( 'resource_id' ) -> unique() -> nullable( false );
+            $table -> unsignedBigInteger( 'customer_id' );
+
+            $table -> timestamps();
+
+            $table -> foreign('customer_id' ) -> references('id' ) -> on( 'customers' ) -> onDelete( 'cascade' );
         });
     }
 
@@ -24,7 +30,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down() : void
     {
         Schema::dropIfExists('wallets');
     }

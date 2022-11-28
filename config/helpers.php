@@ -41,6 +41,7 @@ function generateResource( int $length, $table ) : string
 
 /**
  * Generate unique ID
+ * @param $length
  * @return string
  */
 function generateAlphaNumericResource( $length ) : string
